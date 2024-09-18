@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Do you love me?</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .MessageBox {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                border: 1px solid #000;
+            }
+            #no {
+                position: absolute;
+            }
+            .heart {
+                position: absolute;
+                transform: rotate(90deg);
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                transform: rotate(90deg);
+                animation: scaleUp 1s ease-in-out infinite;
+            }
+            .heart::before,
+            .heart::after {
+                content: "";
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                transform: rotate(90deg);
+                border-radius: 50%;
+            }
+            .heart::before {
+                top: -50px;
+                left: 0;
+            }
+            .heart::after {
+                left: 50px;
+                top: 0;
+            }
+            @keyframes scaleUp {
+                0%, 100% {
+                    transform: scale(1) rotate(45deg);
+                }
+                50% {
+                    transform: scale(1.5) rotate(45deg);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="MessageBox">
+            <h1>Do you love me?</h1>
+            <button id="yes" class="bg-blue-500 text-white px-4 py-2 rounded">Yes</button>
+            <button id="no" class="bg-red-500 text-white px-4 py-2 rounded">No</button>
+        </div>
+    
+        <script>
+            const noButton = document.getElementById('no');
+            const yesButton = document.getElementById('yes');
+            const messageBox = document.querySelector('.MessageBox');
+            const message = messageBox.querySelector('h1');
+    
+            noButton.addEventListener('mouseover', () => {
+                const boxWidth = messageBox.clientWidth;
+                const boxHeight = messageBox.clientHeight;
+                const buttonWidth = noButton.clientWidth;
+                const buttonHeight = noButton.clientHeight;
+    
+                const newLeft = Math.random() * (boxWidth - buttonWidth);
+                const newTop = Math.random() * (boxHeight - buttonHeight);
+    
+                noButton.style.left = `${newLeft}px`;
+                noButton.style.top = `${newTop}px`;
+            });
+    
+            yesButton.addEventListener('click', () => {
+                message.innerText = 'I love you too!';
+                createHeart();
+            });
+    
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.transform = 'translate(-50%, -50%) rotate(45deg)';
+                document.body.appendChild(heart);
+    
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        </script>
+    </body>
+    </html>
